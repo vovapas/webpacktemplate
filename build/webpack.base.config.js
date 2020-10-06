@@ -22,60 +22,65 @@ module.exports = {
         publicPath: '/'
     },
     module: {
-        rules: 
-        [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: '/node_modules/'
-            },   
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]'
-                }
-            },      
-            {
-                test: /\.scss$/,
-                use: [
-                    'style-loader',
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: { sourceMap: true }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: { 
-                            sourceMap: true,
-                            postcssOptions: {
-                                config: path.resolve(__dirname, 'postcss.config.js')
-                            } 
+        rules:
+            [
+                {
+                    test: /\.js$/,
+                    loader: 'babel-loader',
+                    exclude: '/node_modules/'
+                },
+                {
+                    test: /\.(png|jpg|gif|svg)$/,
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]'
+                    }
+                },
+                {
+                    test: /\.scss$/,
+                    use: [
+                        'style-loader',
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: { sourceMap: true }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: true,
+                                postcssOptions: {
+                                    config: path.resolve(__dirname, 'postcss.config.js')
+                                }
+                            }
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: { sourceMap: true }
                         }
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: { sourceMap: true }
-                    }
-                ]
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: { sourceMap: true }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: { sourceMap: true }
-                    }
-                ]
-            }
-        ]
+                    ]
+                },
+                {
+                    test: /\.css$/,
+                    use: [
+                        'style-loader',
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: { sourceMap: true }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: true,
+                                postcssOptions: {
+                                    config: path.resolve(__dirname, 'postcss.config.js')
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
     },
 
     plugins: [
@@ -88,10 +93,10 @@ module.exports = {
             template: `${PATHS.src}/index.html`,
             filename: './index.html'
         }),
-        new CopyWebpackPlugin({            
+        new CopyWebpackPlugin({
             patterns: [
                 { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` }
-            ]         
+            ]
         })
     ]
 }
