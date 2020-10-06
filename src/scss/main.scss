@@ -1,6 +1,2 @@
-$color:blue;
-
-h1{
-    color: $color;
-    display: flex;
-}
+@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "index";
