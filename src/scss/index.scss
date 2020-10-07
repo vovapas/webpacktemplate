@@ -1,12 +1,20 @@
-.div-header-row{
-    color: red;
-    height: 100px;
-}
+$header-height: 100px;
 
-.div-header-logo{
-    background-color: cadetblue;  
-}
+.div-header{
+    background-color: black;
 
-h1{
-    line-height: 100px;
+    h1, h2{    
+        text-align: center;
+    }
+
+    .div-header-logo{
+        background-color: cadetblue;         
+        div{
+            color: aqua;               
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: $header-height;
+        }                   
+    }    
 }
