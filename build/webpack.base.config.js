@@ -6,7 +6,7 @@ const { VueLoaderPlugin } = require('vue-loader')
  
 const PATHS = {
     src: path.join(__dirname, '../src'),
-    dist: path.join(__dirname, '../dist'),
+    dist: path.join(__dirname, '../dist'),   
     assets: 'assets/'
 }
 
@@ -15,12 +15,24 @@ module.exports = {
         paths: PATHS
     },
     entry: {
-        app: PATHS.src
+        app: PATHS.src       
     },
     output: {
-        filename: `${PATHS.assets}js/[name].js`,
+        filename: `${PATHS.assets}js/[name].[contenthash].js`,
         path: PATHS.dist,
-        publicPath: '/'
+        publicPath: ''
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    name: 'vendors',
+                    test: /node_modules/,
+                    chunks: 'all',
+                    enforce: true
+                }
+            }
+        }
     },
     module: {
         rules:
@@ -100,13 +112,13 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: `${PATHS.assets}css/[name].css`,
-            chunkFilename: "[id].css"
+            filename: `${PATHS.assets}css/[name].[contenthash].css`,
+            chunkFilename: `${PATHS.assets}css/[name].[contenthash].css`
         }),
-        new HtmlWebpackPlugin({
-            hash: false,
+        new HtmlWebpackPlugin({            
             template: `${PATHS.src}/index.html`,
-            filename: './index.html'
+            filename: './index.html',
+            inject: true
         }),
         new CopyWebpackPlugin({
             patterns: [
