@@ -56,7 +56,7 @@ module.exports = {
                 test: /\.(png|jpg|gif)$/,
                 loader: 'file-loader',
                 options: {
-                    name: '[name].[ext]'
+                    name: '[name].[ext]',                
                 }
             },  
             {
@@ -116,13 +116,14 @@ module.exports = {
     },
     resolve:{
         alias: {
+            '~': 'src',
             'vue$': 'vue/dist/vue.js'
         }
     },
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
-                { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` },
+                { from: `${PATHS.src}/${PATHS.assets}/img`, to: `${PATHS.assets}img` },
             //    { from: `${PATHS.src}/fonts`, to: `${PATHS.assets}fonts` }
             ]
         }),

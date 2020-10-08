@@ -1,5 +1,5 @@
 import './js/common'
-import './scss/main.scss'
+import './assets/scss/main.scss'
 
 window.Vue = require('vue')
 import store from './store'
