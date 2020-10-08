@@ -36,74 +36,83 @@ module.exports = {
     },
     module: {
         rules:
-            [
-                {
-                    test: /\.js$/,
-                    loader: 'babel-loader',
-                    exclude: '/node_modules/'
-                },
-                {
-                    test: /\.vue$/,
-                    loader: 'vue-loader',
-                    options: {
-                        loader: {
-                            scss: 'vue-style-loader!css-loader!sass-loader'
-                        }
+        [             
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: '/node_modules/'
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    loader: {
+                        scss: 'vue-style-loader!css-loader!sass-loader'
                     }
-                   
-                },
-                {
-                    test: /\.(png|jpg|gif|svg)$/,
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]'
-                    }
-                },
-                {
-                    test: /\.scss$/,
-                    use: [
-                        'style-loader',
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: 'css-loader',
-                            options: { sourceMap: true }
-                        },
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true,
-                                postcssOptions: {
-                                    config: path.resolve(__dirname, 'postcss.config.js')
-                                }
-                            }
-                        },
-                        {
-                            loader: 'sass-loader',
-                            options: { sourceMap: true }
-                        }
-                    ]
-                },
-                {
-                    test: /\.css$/,
-                    use: [
-                        'style-loader',
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: 'css-loader',
-                            options: { sourceMap: true }
-                        },
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true,
-                                postcssOptions: {
-                                    config: path.resolve(__dirname, 'postcss.config.js')
-                                }
-                            }
-                        }
-                    ]
                 }
-            ]
+                
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]'
+                }
+            },  
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,                   
+                loader: 'file-loader',           
+                options: {
+                    name: '[folder]/[name].[ext]',
+                    outputPath: 'assets/fonts/',
+                    publicPath: url => '../fonts/' + url
+                }
+            },            
+            {
+                test: /\.scss$/,
+                use: [
+                    'style-loader',
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: { sourceMap: true }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: true,
+                            postcssOptions: {
+                                config: path.resolve(__dirname, 'postcss.config.js')
+                            }
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: { sourceMap: true }
+                    }
+                ]
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: { sourceMap: true }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: true,
+                            postcssOptions: {
+                                config: path.resolve(__dirname, 'postcss.config.js')
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
     },
     resolve:{
         alias: {
@@ -111,21 +120,21 @@ module.exports = {
         }
     },
     plugins: [
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` },
+            //    { from: `${PATHS.src}/fonts`, to: `${PATHS.assets}fonts` }
+            ]
+        }),
         new MiniCssExtractPlugin({
-            filename: `${PATHS.assets}css/[name].[contenthash].css`,
-            chunkFilename: `${PATHS.assets}css/[name].[contenthash].css`
+            filename: `${PATHS.assets}css/[name].css`,
+            chunkFilename: `${PATHS.assets}css/[name].css`
         }),
         new HtmlWebpackPlugin({            
             template: `${PATHS.src}/index.html`,
             filename: './index.html',
             inject: true
-        }),
-        new CopyWebpackPlugin({
-            patterns: [
-                { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` }
-            ]
-        }),
-
+        }),      
         new VueLoaderPlugin()
     ]
 }
