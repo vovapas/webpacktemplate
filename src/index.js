@@ -1,16 +1,11 @@
-import './js/common'
+//import './js/common'
 import './assets/scss/main.scss'
 
-window.Vue = require('vue')
+import Vue from 'vue'
+import App from './App.vue'
 import store from './store'
 
-Vue.component('example-component', require('./components/Example.vue').default)
-const app = new Vue({
-    data() {
-        return {
-            component: false
-        }
-    },
-    store,
-    el: '#app'
-})
+new Vue({
+    render: h => h(App),
+  }).$mount('#app')
+  
